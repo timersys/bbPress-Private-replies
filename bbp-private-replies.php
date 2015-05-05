@@ -271,15 +271,14 @@ class BBP_Private_Replies {
 				continue;
 			}
 
-			if( user_can( $user_id, 'moderate' ) || (int) $topic_author === (int) $user_id ) {
+			if( user_can( $user_id, 'moderate' ) && (int) $topic_author !== (int) $user_id ) {
 
 				// Get email address of subscribed user
 				$headers[] = 'Bcc: ' . get_userdata( $user_id )->user_email;
 			
 			}
 		}
-
-		wp_mail( $do_not_reply, $subject, $message, $headers );
+		wp_mail( $topic_author, $subject, $message, $headers );
 	}
 
 
